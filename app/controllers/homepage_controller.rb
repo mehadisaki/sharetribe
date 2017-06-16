@@ -2,6 +2,7 @@
 class HomepageController < ApplicationController
 
   before_action :save_current_path, :except => :sign_in
+  skip_before_action :verify_authenticity_token, only: :custom_head_scripts
 
   APP_DEFAULT_VIEW_TYPE = "grid"
   VIEW_TYPES = ["grid", "list", "map"]
@@ -138,6 +139,13 @@ class HomepageController < ApplicationController
   end
   # rubocop:enable AbcSize
   # rubocop:enable MethodLength
+
+  include ActionView::Helpers::JavaScriptHelper
+
+  def custom_head_scripts
+    js = @current_community.custom_head_script.to_s
+    render body: "document.write(\"#{escape_javascript js}\")", content_type: 'text/javascript'
+  end
 
   private
 
