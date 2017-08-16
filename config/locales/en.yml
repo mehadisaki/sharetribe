@@ -644,6 +644,11 @@ en:
     username_or_email: "Email or username"
     what_is_this: "What's this?"
     removed_user: "Removed user"
+    payment_fee_info:
+      title: "Payment processing fee"
+      stripe: "Stripe"
+      paypal: "PayPal"
+      info: "Payments are processed by either Stripe or PayPal. You can allow buyers to use either of these options or only one of them. They both charge a fee from each payment"
     paypal_fee_info:
       title: "PayPal's payment processing fee"
       body_text: |-
@@ -656,11 +661,11 @@ en:
     stripe_fee_info:
       title: "Stripe's payment processing fee"
       body_text: |-
-          Stripe charges a processing fee from each payment. This fee is between 1.4% and 3% of the total sales price, depending on the country of residence of the buyer. In general, domestic purchases have lower fees than international ones.
-          You can see fee fules by visiting Stripe %{link_to_stripe}. After each purchase you will get a receipt displaying the exact fee.
+          Stripe charges a processing fee from each payment. This fee is between 2% and 4% of the total sales price, depending on the country of residence of the buyer. In general, domestic purchases have lower fees than international ones.
+          You can see fee rules by visiting Stripe %{link_to_stripe}. After each purchase you will get a receipt displaying the exact fee.
       body_with_shipping_text: |-
-          Stripe charges a processing fee from each payment. This fee is between 1.4% and 3% of the total sales price (including shipping), depending on the country of residence of the buyer. In general, domestic purchases have lower fees than international ones.
-          You can see fee fules by visiting Stripe %{link_to_stripe}. After each purchase you will get a receipt displaying the exact fee.
+          Stripe charges a processing fee from each payment. This fee is between 2% and 4% of the total sales price (including shipping), depending on the country of residence of the buyer. In general, domestic purchases have lower fees than international ones.
+          You can see fee rules by visiting Stripe %{link_to_stripe}. After each purchase you will get a receipt displaying the exact fee.
       link_to_stripe_text: here
 
   conversations:
@@ -685,8 +690,9 @@ en:
       total_value: "%{seller_gets}*"
       paypal_fee_info: "* Excludes <a id='%{fee_info_link_id}' href='#'>PayPal's payment processing fee</a>"
       stripe_fee_info: "* Excludes <a id='%{fee_info_link_id}' href='#'>Stripe's payment processing fee</a>"
+      payment_fee_info: "* Excludes <a id='%{fee_info_link_id}' href='#'>payment processing fee</a>"
       shipping_price_label: "Shipping:"
-      stripe-fee_label: "Stripe Gateway Fee"
+      stripe-fee_label: "Payment processing fee"
     confirm:
       confirm_description: "If your order has been fulfilled you should confirm it as done. Then you can give feedback to the other party."
       cancel_description: "If your order was not fulfilled, you can mark it as 'disputed'. You can still give feedback to the other party and describe what happened."
@@ -933,8 +939,7 @@ en:
       quantity: "Quantity:"
       you_have_received_new_payment: "You have been paid <b>%{payment_sum}</b> for <b>%{listing_title}</b> by %{payer_full_name}. Here is your receipt."
     payment_receipt_to_seller:
-      stripe_gateway_fee: "Stripe's fee:"
-      paypal_gateway_fee: "PayPal's fee:"
+      payment_gateway_fee: "Payment processing fee:"
       shipping_total: "Shipping:"
       product: "Product:"
       price_payer_paid: "Price %{payer_full_name} paid:"
@@ -1561,14 +1566,9 @@ en:
         time: "hour, day, month, ..."
         long_time: "week, month, ..."
         after_service_fee_you_will_get: "After %{service_name} and payment processor fees you will get %{sum_with_currency}"
-        no_service_fee_you_will_get_paypal_text: "%{paypal_fee_info_link} will be deducted from the price."
-        no_service_fee_you_will_get_stripe_text: "%{stripe_fee_info_link} will be deducted from the price."
-        no_service_fee_you_will_get_paypal_stripe_text: "%{paypal_fee_info_link} or %{stripe_fee_info_link} will be deducted from the price."
-        after_service_fee_you_will_get_paypal_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and %{paypal_fee_info_link} will be deducted from the price."
-        after_service_fee_you_will_get_stripe_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and %{stripe_fee_info_link} will be deducted from the price."
-        after_service_fee_you_will_get_paypal_stripe_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and %{paypal_fee_info_link} or %{stripe_fee_info_link} will be deducted from the price."
-        paypal_fee_info_link_text: "PayPal's payment processing fee"
-        stripe_fee_info_link_text: "Stripe's payment processing fee"
+        no_service_fee_you_will_get_payment_text: "%{payment_fee_info_link} will be deducted from the price."
+        after_service_fee_you_will_get_payment_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and %{payment_fee_info_link} will be deducted from the price."
+        payment_fee_info_link_text: "payment processing fee"
         delivery: "Delivery method"
         shipping: Shipping
         shipping_price: "Shipping fee"
@@ -1743,12 +1743,14 @@ en:
     transaction_agreement_checkbox:
       read_more: View.
     stripe_payment:
-      address: Shipping Address
+      payment: Payment
+      pay_with_card: Pay with credit card
+      address: Shipping address
       address_country: Country
       address_city: City
       address_state: State or province
       address_street1: Street
-      address_postal_code: Postal Code
+      address_postal_code: Postal code
       address_name: Name
       address_phone: Phone
 
@@ -1842,6 +1844,7 @@ en:
     paypal_permission_granted_summary: "Permission for transaction fees granted"
   paypal:
     pay_with_paypal: "Proceed to payment"
+    or_pay_with_paypal: "or"
     checkout_with_paypal: "Checkout with PayPal"
     cancel_succesful: "PayPal payment succesfully canceled"
     transaction:
@@ -2285,7 +2288,7 @@ en:
     you_are_ready_to_accept_payments: "You are ready to accept payments!"
     commission: "%{commission} %"
     pay_with_stripe: "Pay with Stripe using %{card}"
-    add_and_pay: "Pay with Stripe"
+    add_and_pay: "Confirm payment"
     missing_payment: "You have open listings but your account is not set up to receive payments. To configure your payment preferences, visit %{settings_link}"
     stripe_bank_connected: "Bank account details configured successfully!"
     stripe_can_accept: "You're now all set to accept credit card payments"
